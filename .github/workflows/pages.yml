@@ -33,6 +33,13 @@ jobs:
       - name: Build (static export)
         run: npm run build
 
+      - name: Verify out folder
+        run: |
+          echo "=== root ==="
+          ls -la
+          echo "=== out ==="
+          ls -la out
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
