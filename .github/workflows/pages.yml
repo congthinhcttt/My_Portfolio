@@ -32,6 +32,8 @@ jobs:
 
       - name: Build (static export)
         run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /My_Portfolio
 
       - name: Verify out folder
         run: |
