@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
+/* =========================
+   Design tokens (Tailwind v4 friendly)
+   ========================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 2 6 23;      /* slate-ish dark: rgb triplets */
+  --foreground: 226 232 240; /* slate-200 */
+
+  --card: 12 16 28;
+  --border: 255 255 255;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
+/* Base */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  min-height: 100vh;
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Text selection */
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: rgba(226, 232, 240, 1);
+}
+
+/* =========================
+   Background helpers
+   ========================= */
+.bg-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 0
+  );
+  background-size: 28px 28px;
+}
+
+/* =========================
+   Scrollbar (Chrome/Edge)
+   ========================= */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* =========================
+   Noise overlay (SAFE)
+   - fixed to cover screen
+   - z-index negative so it never hides content
+   - isolation creates a stacking context
+   ========================= */
+.noise {
+  position: relative;
+  isolation: isolate;
+}
+
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  z-index: -5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+/* Subtle grid */
+.bg-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 0
+  );
+  background-size: 28px 28px;
+}
+
+/* Vignette / top glow */
+.bg-vignette {
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 255, 255, 0.06),
+    transparent 55%
+  );
+}
+
+/* Code highlight (highlight.js) */
+pre {
+  overflow: auto;
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+code {
+  font-size: 0.9em;
+}
+
+.hljs {
+  background: transparent !important;
+}
+
+
+/* Markdown content */
+.prose pre {
+  overflow: auto;
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.prose code { font-size: 0.9em; }
+.hljs { background: transparent !important; }
+
