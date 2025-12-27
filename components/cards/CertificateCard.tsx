@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import type { Certificate } from "@/types";
 import { ScaleIn } from "@/components/motion/Motion";
+import { asset } from "@/lib/utils/asset";
 
 type Props = {
   certificate: Certificate;
@@ -19,7 +20,8 @@ const CertificateCard: React.FC<Props> = ({ certificate }) => {
       {/* Image */}
       <div className="relative aspect-video overflow-hidden">
         <Image
-          src={certificate.imageUrl}          // ✅ dùng imageUrl
+          src={asset(certificate.imageUrl)}
+         // ✅ dùng imageUrl
           alt={certificate.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"

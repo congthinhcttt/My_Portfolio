@@ -2,6 +2,8 @@ import React from "react";
 import { profile } from "../../lib/data/profile";
 import { FadeIn } from "../../components/motion/Motion";
 import type { Metadata } from "next";
+import { asset } from "@/lib/utils/asset";
+
 
 export const metadata: Metadata = {
   title: "About",
@@ -18,8 +20,7 @@ const Bullet = ({ children }: { children: React.ReactNode }) => (
 );
 
 const AboutPage: React.FC = () => {
-  const avatarSrc =
-    profile.avatarUrl?.startsWith("/") ? profile.avatarUrl : "/image/profile/avatar.jpg";
+  const avatarSrc = asset(profile.avatarUrl ?? "/image/profile/avatar.jpg");
 
   return (
     <main className="pt-28 pb-24 bg-zinc-950">

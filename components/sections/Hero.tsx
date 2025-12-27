@@ -8,22 +8,20 @@ import { ArrowRight, Download, Github, Linkedin, Twitter } from "lucide-react";
 
 import { profile } from "@/lib/data/profile";
 import { FadeIn } from "@/components/motion/Motion";
+import { asset } from "@/lib/utils/asset";
 
-// ✅ Chuẩn hoá src để next/image không bị "Invalid URL"
+// Chuẩn hoá src (trả về URL ngoài hoặc path bắt đầu bằng "/")
 const normalizeImgSrc = (src?: string) => {
   if (!src || src.trim() === "") return "/image/profile/avatar.jpg";
-
   const s = src.trim();
-
-  // URL ngoài hoặc path tuyệt đối
   if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("/")) return s;
-
-  // nếu bạn lỡ để "image/profile/avatar.jpg" -> tự thêm "/"
   return `/${s}`;
 };
 
 const Hero: React.FC = () => {
-  const avatarSrc = normalizeImgSrc((profile as any).avatar);
+  // ✅ ưu tiên avatarUrl (đúng kiểu bạn đang dùng ở data/profile)
+  const rawAvatar = (profile as any).avatarUrl ?? (profile as any).avatar ?? "";
+  const avatarSrc = asset(normalizeImgSrc(rawAvatar));
 
   return (
     <section className="relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32">
@@ -56,7 +54,7 @@ const Hero: React.FC = () => {
               <p className="mb-10 max-w-xl text-lg leading-relaxed text-white/55 md:text-xl">
                 Xin chào, tôi là{" "}
                 <span className="font-semibold text-white/85">{profile.name}</span>.{" "}
-                {(profile as any).shortBio ?? profile.bio}
+                {(profile as any).shortBio ?? (profile as any).bio}
               </p>
 
               <div className="mb-12 flex flex-wrap items-center gap-5">
@@ -65,14 +63,12 @@ const Hero: React.FC = () => {
                   className="group flex items-center gap-2 rounded-2xl bg-indigo-600 px-8 py-4 font-bold text-white shadow-xl shadow-indigo-600/20 transition-all hover:bg-indigo-500 active:scale-95"
                 >
                   Xem dự án
-                  <ArrowRight
-                    size={20}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
+                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
                 </Link>
 
+                {/* ✅ cv.pdf cũng cần basePath khi deploy */}
                 <a
-                  href="/cv.pdf"
+                  href={asset("/cv.pdf")}
                   className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-8 py-4 font-bold text-white/80 backdrop-blur transition-all hover:bg-white/10 active:scale-95"
                 >
                   <Download size={20} />
@@ -81,9 +77,7 @@ const Hero: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-6">
-                <span className="text-xs font-bold uppercase tracking-widest text-white/35">
-                  Kết nối:
-                </span>
+                <span className="text-xs font-bold uppercase tracking-widest text-white/35">Kết nối:</span>
                 <div className="h-px w-8 bg-white/10" />
                 <div className="flex gap-4">
                   <a

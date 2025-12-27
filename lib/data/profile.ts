@@ -4,7 +4,7 @@ export const profile: Profile = {
   name: "Nguyễn Công Thịnh",
   role: "Frontend Developer & UI/UX Designer",
   bio: "Tôi là một lập trình viên đam mê tạo ra các giải pháp web hiện đại...",
-  avatarUrl: "image/avatar.jpg",
+  avatarUrl: "/image/profile/avatar.jpg",
   email: "congthinh1504@gmail.com",
   phone: "+84 333 787 207",
   location: "Thành phố Hồ Chí Minh, Việt Nam",

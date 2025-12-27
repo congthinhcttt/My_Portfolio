@@ -3,6 +3,7 @@ import { ExternalLink, Github } from "lucide-react";
 
 import type { Project } from "@/types";
 import { ScaleIn } from "@/components/motion/Motion";
+import { asset } from "@/lib/utils/asset";
 
 interface ProjectCardProps {
   project: Project;
@@ -16,7 +17,9 @@ const isExternal = (url: string) => /^https?:\/\//i.test(url);
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const imageSrc =
-    project.imageUrl && project.imageUrl.trim() !== "" ? project.imageUrl : "/placeholder.jpg";
+  project.imageUrl && project.imageUrl.trim() !== ""
+    ? asset(project.imageUrl)
+    : asset("/placeholder.jpg");
 
   const demoHref =
     project.demoUrl && project.demoUrl.trim() !== "" ? project.demoUrl : FALLBACK_DEMO;
