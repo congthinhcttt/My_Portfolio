@@ -1,35 +1,29 @@
 import React from "react";
 import { ExternalLink, Github } from "lucide-react";
-
 import type { Project } from "@/types";
 import { ScaleIn } from "@/components/motion/Motion";
-import { asset, href, isExternalUrl } from "@/lib/utils/asset";
+import { asset, href } from "@/lib/utils/asset";
 
 interface ProjectCardProps {
   project: Project;
 }
 
-// fallback link để vẫn click được
 const FALLBACK_DEMO = "/projects";
 const FALLBACK_CODE = "/projects";
 
+const isExternal = (url: string) => /^https?:\/\//i.test(url);
+
+const normalizeLink = (url: string) => {
+  if (!url) return href(FALLBACK_DEMO);
+  if (isExternal(url) || url.startsWith("#") || url.startsWith("mailto:") || url.startsWith("tel:")) return url;
+  return href(url); // ✅ thêm basePath cho link nội bộ
+};
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const imageSrc =
-    project.imageUrl && project.imageUrl.trim() !== ""
-      ? asset(project.imageUrl)
-      : asset("/placeholder.jpg");
+  const imageSrc = project.imageUrl?.trim() ? asset(project.imageUrl) : asset("/placeholder.jpg");
 
-  // Demo link
-  const demoHrefRaw =
-    project.demoUrl && project.demoUrl.trim() !== "" ? project.demoUrl.trim() : FALLBACK_DEMO;
-
-  const demoHref = isExternalUrl(demoHrefRaw) ? demoHrefRaw : href(demoHrefRaw);
-
-  // Code link
-  const codeHrefRaw =
-    project.sourceUrl && project.sourceUrl.trim() !== "" ? project.sourceUrl.trim() : FALLBACK_CODE;
-
-  const codeHref = isExternalUrl(codeHrefRaw) ? codeHrefRaw : href(codeHrefRaw);
+  const demoHref = normalizeLink(project.demoUrl?.trim() ? project.demoUrl : FALLBACK_DEMO);
+  const codeHref = normalizeLink(project.sourceUrl?.trim() ? project.sourceUrl : FALLBACK_CODE);
 
   return (
     <ScaleIn className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 transition-all duration-300 hover:border-indigo-500/50">
@@ -42,7 +36,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
 
       <div className="p-5">
-        {/* Tech stack */}
         <div className="mb-3 flex flex-wrap gap-2">
           {(project.techStack ?? []).map((t) => (
             <span
@@ -60,12 +53,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         <p className="mb-4 line-clamp-2 text-sm text-zinc-400">{project.description}</p>
 
-        {/* Demo + Code */}
         <div className="flex items-center gap-4">
           <a
             href={demoHref}
-            target={isExternalUrl(demoHref) ? "_blank" : undefined}
-            rel={isExternalUrl(demoHref) ? "noreferrer" : undefined}
+            target={isExternal(demoHref) ? "_blank" : undefined}
+            rel={isExternal(demoHref) ? "noreferrer" : undefined}
             className="flex items-center gap-1 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
           >
             <ExternalLink size={16} /> Demo
@@ -73,8 +65,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
           <a
             href={codeHref}
-            target={isExternalUrl(codeHref) ? "_blank" : undefined}
-            rel={isExternalUrl(codeHref) ? "noreferrer" : undefined}
+            target={isExternal(codeHref) ? "_blank" : undefined}
+            rel={isExternal(codeHref) ? "noreferrer" : undefined}
             className="flex items-center gap-1 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
           >
             <Github size={16} /> Code
