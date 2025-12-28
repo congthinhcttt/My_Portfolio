@@ -4,6 +4,7 @@ const repo = "My_Portfolio"; // ✅ đúng tên repo trong URL
 
 const nextConfig: NextConfig = {
   output: "export",
+  trailingSlash: true,
 
   // GitHub Pages không có Image Optimization server
   images: {
