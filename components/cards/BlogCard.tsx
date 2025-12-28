@@ -16,7 +16,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   return (
     <FadeIn className="group h-full">
       <Link
-        href={`/blog/${post.slug}`}
+        href={`/blog/${post.slug}/`}
         className="flex flex-col h-full bg-zinc-900/40 border border-zinc-800/50 rounded-[2rem] overflow-hidden hover:border-indigo-500/30 hover:bg-zinc-900/60 transition-all duration-500 shadow-xl hover:shadow-indigo-500/5"
       >
         <div className="relative aspect-[16/10] overflow-hidden">

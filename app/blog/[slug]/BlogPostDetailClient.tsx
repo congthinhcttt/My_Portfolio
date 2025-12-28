@@ -8,7 +8,6 @@ import { ArrowLeft, Calendar, Tag, Share2, Clock, ChevronRight } from "lucide-re
 import { FadeIn } from "@/components/motion/Motion";
 import { motion, useScroll, useSpring } from "framer-motion";
 import BlogCard from "@/components/cards/BlogCard";
-import { asset } from "@/lib/utils/asset";
 
 type BlogPost = (typeof blogPosts)[number];
 
@@ -45,7 +44,7 @@ export default function BlogPostDetailClient({ post }: { post: BlogPost }) {
       <div className="container mx-auto px-4 md:px-6 max-w-4xl">
         <div className="flex justify-between items-center mb-16">
           <Link
-            href="/blog"
+            href="/blog/"
             className="group inline-flex items-center gap-3 text-zinc-500 hover:text-indigo-400 transition-all"
           >
             <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 group-hover:border-indigo-500/50 group-hover:bg-indigo-500/5 transition-all">
@@ -84,7 +83,7 @@ export default function BlogPostDetailClient({ post }: { post: BlogPost }) {
             className="relative aspect-[16/9] mb-24 rounded-[3rem] overflow-hidden border border-zinc-800 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] group"
           >
             <Image
-              src={asset(post.imageUrl)} // ✅ thêm basePath cho GitHub Pages
+              src={post.imageUrl}
               alt={post.title}
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -110,7 +109,7 @@ export default function BlogPostDetailClient({ post }: { post: BlogPost }) {
                   </p>
                 </div>
                 <Link
-                  href="/blog"
+                  href="/blog/"
                   className="group text-indigo-400 font-black text-xs hover:text-indigo-300 flex items-center gap-3 transition-all uppercase tracking-[0.3em]"
                 >
                   Xem tất cả{" "}

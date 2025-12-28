@@ -1,12 +1,12 @@
 import type { NextConfig } from "next";
 
-const repo = "My_Portfolio"; // ✅ đúng tên repo trong URL
+const repo = "My_Portfolio";
+const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   output: "export",
-  trailingSlash: true,
+  trailingSlash: true, // ✅ QUAN TRỌNG cho GitHub Pages (tạo /slug/index.html)
 
-  // GitHub Pages không có Image Optimization server
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -15,9 +15,9 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // chạy dưới subpath /My_Portfolio/
-  basePath: `/${repo}`,
-  assetPrefix: `/${repo}/`,
+  // ✅ Chỉ dùng basePath khi deploy production
+  basePath: isProd ? `/${repo}` : "",
+  assetPrefix: isProd ? `/${repo}/` : "",
 };
 
 export default nextConfig;
