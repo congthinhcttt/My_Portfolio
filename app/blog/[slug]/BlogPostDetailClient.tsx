@@ -8,6 +8,7 @@ import { ArrowLeft, Calendar, Tag, Share2, Clock, ChevronRight } from "lucide-re
 import { FadeIn } from "@/components/motion/Motion";
 import { motion, useScroll, useSpring } from "framer-motion";
 import BlogCard from "@/components/cards/BlogCard";
+import { hrefSlash } from "@/lib/utils/asset";
 
 type BlogPost = (typeof blogPosts)[number];
 
@@ -109,7 +110,7 @@ export default function BlogPostDetailClient({ post }: { post: BlogPost }) {
                   </p>
                 </div>
                 <Link
-                  href="/blog/"
+                  href={hrefSlash("/blog")}
                   className="group text-indigo-400 font-black text-xs hover:text-indigo-300 flex items-center gap-3 transition-all uppercase tracking-[0.3em]"
                 >
                   Xem tất cả{" "}
